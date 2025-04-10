@@ -9,13 +9,17 @@ import numpy as np
 
 # Cargar datos
 ventas = pd.read_csv("GNCV.csv")
+
+# Cargar shapefile y simplificar geometría para reducir uso de memoria
 mapa = gpd.read_file("COLOMBIA.shp")
+mapa["geometry"] = mapa["geometry"].simplify(0.01, preserve_topology=True)  
 
 # Convertir tipos
 ventas["ANIO_VENTA"] = ventas["ANIO_VENTA"].astype(str)
 ventas["MES_VENTA"] = ventas["MES_VENTA"].astype(str)
 ventas["DIA_VENTA"] = ventas["DIA_VENTA"].astype(str)
 ventas["CODIGO_MUNICIPIO_DANE"] = ventas["CODIGO_MUNICIPIO_DANE"].astype(str)
+
 
 nombre_amigable = {
     "EDS_ACTIVAS": "EDS Activas",
